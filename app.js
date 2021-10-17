@@ -5,6 +5,31 @@ var submitBtn = document.querySelector('#submit-btn');
 
 var outputBox = document.querySelector('#output-box');
 
+function checkNegatives() {
+    if (Number(intialPrice.value) == 0 || Number(stockQuantity.value) == 0){
+        intialPrice.placeholder = 0
+        stockQuantity.placeholder = 0
+        currentPrice.placeholder = 0
+        outputBox.innerHTML="Please fill all the fields (non-zero)"
+    }else{
+        if(Number(intialPrice.value)<=0){
+            outputBox.innerHTML="Initial price should be positive and non-zero"
+        }else if(Number(stockQuantity.value)<=0){
+            outputBox.innerHTML="No of Stocks should be positive and non-zero"
+        }else if(Number(currentPrice.value) < 0 ){
+            outputBox.innerHTML="Current price can't be negative"
+        }else{
+            if (Number(currentPrice.value)==0){
+                currentPrice.placeholder = 0
+                return "Positive"
+            }else{
+                return "Positive"
+            }
+            
+        }
+    }
+}
+
 submitBtn.addEventListener('click', submitHandler)
 
 function submitHandler() {
@@ -15,6 +40,10 @@ function submitHandler() {
 }
 
 function calculateProfitAndLoss(initial, quantity, current){
+    const checker = checkNegatives();
+    if (checker === 'Positive') {
+
+    
     if(initial > current){
         // loss logic here
         var loss = (initial - current) * quantity;
@@ -35,6 +64,8 @@ function calculateProfitAndLoss(initial, quantity, current){
 
         //the rest of logic
         showOutput('No Pain no gain and no gain no pain');
+    }
+
     }
 }
 
